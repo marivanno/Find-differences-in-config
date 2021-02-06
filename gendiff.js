@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import program from 'commander';
 import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
@@ -22,15 +21,7 @@ const gendiff = (filepath1, filepath2) => {
       resultObject.push(`  ${item}: ${jsonObj[item]}`);
     }
   });
-  return console.log(`Your's difference in files: \n ${resultObject.join(',\n')}`);
+  return resultObject;
 };
 
-program
-  .version('0.0.1')
-  .description('Compares two configuration files and shows a difference.')
-  .option('-f, --format <type>', 'output format')
-  .arguments('<filepath1>', 'path to file 1')
-  .arguments('<filepath2>', 'path to file 2')
-  .action((path1, path2) => gendiff(path1, path2))
-  .parse(process.argv);
-
+export default gendiff;
