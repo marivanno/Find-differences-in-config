@@ -1,6 +1,14 @@
 {
-    "timeout": 20,
-    "verbose": true,
-    "host": "hexlet.io",
-    "bober": 2
+  "animal": "bober",
+  "number": 2000,
+  "famaly": {
+    "male": "Ivan shadrin",
+    "female": "Marina shadrina"
+  },
+  "people": {
+    "americanPeople": "George Bush",
+    "russianPeople": {
+      "name": "Danila"
+    }
   }
+}

@@ -1,33 +1,5 @@
 import _ from 'lodash';
 
-const a = {
-  animal: 'bober',
-  number: 1989,
-  number2: 1990,
-  people: {
-    americanPeople: 'George Bush',
-    russianPeople: {
-      name: 'Danila',
-      surname: 'Pedrila',
-    },
-  },
-};
-
-const b = {
-  animal: 'bober',
-  number: 2000,
-  famaly: {
-    male: 'Ivan shadrin',
-    female: 'Marina chekmareva',
-  },
-  people: {
-    americanPeople: 'George Bush',
-    russianPeople: {
-      name: 'Danila',
-    },
-  },
-};
-
 const buildTree = (jsonObjBefore, jsonObjAfter) => {
   const allKeyInArray = _.union(_.keys(jsonObjBefore), _.keys(jsonObjAfter)).sort();
   const resultObject = [];
@@ -45,7 +17,7 @@ const buildTree = (jsonObjBefore, jsonObjAfter) => {
         type: 'deleted',
       });
     } else if (jsonObjBefore[key] !== jsonObjAfter[key]
-            && !_.isObjectLike(jsonObjBefore[key])) {
+          && !_.isObjectLike(jsonObjBefore[key])) {
       resultObject.push({
         key,
         valueBefore: jsonObjBefore[key],
@@ -53,7 +25,7 @@ const buildTree = (jsonObjBefore, jsonObjAfter) => {
         type: 'modifed',
       });
     } else if (jsonObjBefore[key] !== jsonObjAfter[key]
-        && !_.isObjectLike(jsonObjAfter[key])) {
+      && !_.isObjectLike(jsonObjAfter[key])) {
       resultObject.push({
         key,
         valueBefore: jsonObjBefore[key],
@@ -77,4 +49,4 @@ const buildTree = (jsonObjBefore, jsonObjAfter) => {
   return resultObject;
 };
 
-console.log(buildTree(a, b));
+export default buildTree;

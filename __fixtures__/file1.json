@@ -1,7 +1,16 @@
 {
-    "host": "hexlet.io",
-    "timeout": 50,
-    "proxy": "123.234.53.22",
-    "follow": false,
-    "bober": 2
+  "animal": "bober",
+  "number": 1989,
+  "number2": 1990,
+  "famaly": {
+    "male": "Ivan shadrin",
+    "female": "Marina chekmareva"
+  },
+  "people": {
+    "americanPeople": "George Bush",
+    "russianPeople": {
+      "name": "Danila",
+      "surname": "Pedrila"
+    }
   }
+}
