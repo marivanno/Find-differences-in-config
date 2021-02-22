@@ -28,53 +28,27 @@ const b = {
   },
 };
 
-const buildTree = (jsonObjBefore, jsonObjAfter) => {
-  const allKeyInArray = _.union(_.keys(jsonObjBefore), _.keys(jsonObjAfter)).sort();
-  const resultObject = [];
-  allKeyInArray.forEach((key) => {
-    if (!_.has(jsonObjBefore, key)) {
-      resultObject.push({
-        key,
-        value: jsonObjAfter[key],
-        type: 'added',
-      });
-    } else if (!_.has(jsonObjAfter, key)) {
-      resultObject.push({
-        key,
-        value: jsonObjBefore[key],
-        type: 'deleted',
-      });
-    } else if (jsonObjBefore[key] !== jsonObjAfter[key]
-            && !_.isObjectLike(jsonObjBefore[key])) {
-      resultObject.push({
-        key,
-        valueBefore: jsonObjBefore[key],
-        valueAfter: jsonObjAfter[key],
-        type: 'modifed',
-      });
-    } else if (jsonObjBefore[key] !== jsonObjAfter[key]
-        && !_.isObjectLike(jsonObjAfter[key])) {
-      resultObject.push({
-        key,
-        valueBefore: jsonObjBefore[key],
-        valueAfter: jsonObjAfter[key],
-        type: 'modifed',
-      });
-    } else if (_.isObjectLike(jsonObjBefore[key]) && _.isObjectLike(jsonObjAfter[key])) {
-      resultObject.push({
-        key,
-        type: 'nested',
-        value: buildTree(jsonObjBefore[key], jsonObjAfter[key]),
-      });
-    } else {
-      resultObject.push({
-        key,
-        value: jsonObjAfter[key],
-        type: 'unchenged',
-      });
+
+const spacegenerator = (num) => '   '.repeat(num);
+
+const buildTreeObject = (object) => {
+  const ownArray = Object.entries(object);
+  return ownArray.map(([key, value]) => {
+    if (_.isObjectLike(value)) {
+      return [key, buildTreeObject(value)];
     }
+    return [key, value];
   });
-  return resultObject;
 };
 
-console.log(buildTree(a, b));
+const buildStringTree = (array, depth = 0) => {
+  const result = array.reduce((acc, item) => {
+    if (Array.isArray(item[1])) {
+      return `${acc} \n${spacegenerator(depth)}  ${item[0]}: ${buildStringTree(item[1], depth + 1)}`;
+    }
+    return `${acc} \n${spacegenerator(depth)}  ${item[0]}: ${item[1]}`;
+  }, '{');
+  return `${result} \n${spacegenerator(depth)}}`;
+};
+
+console.log(buildStringTree(buildTreeObject(b)));
