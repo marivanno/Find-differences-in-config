@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export const spacegenerator = (num) => '   '.repeat(num);
+export const spacegenerator = (num) => '    '.repeat(num);
 
 export const buildObjectToArray = (object) => {
   const ownArray = Object.entries(object);
@@ -21,3 +21,4 @@ export const buildStringTree = (array, depth = 0) => {
   }, '{');
   return `${result} \n${spacegenerator(depth)}}`;
 };
+
