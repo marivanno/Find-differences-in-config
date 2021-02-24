@@ -23,3 +23,9 @@ const buildTree = (array, depth = 0) => {
 };
 
 export const ObjectToString = (object, depth) => buildTree(buildArray(object), depth);
+
+export const generateToString = (depth, key, value, char) => {
+  if (_.isObjectLike(value)) {
+    return `${spaceGen(depth)}${char} ${key}: ${ObjectToString(value, 2)}`;
+  } return `${spaceGen(depth)}${char} ${key}: ${value}`;
+};
