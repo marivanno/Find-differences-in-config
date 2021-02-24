@@ -8,7 +8,13 @@
   "people": {
     "americanPeople": "George Bush",
     "russianPeople": {
-      "name": "Danila"
+      "name": { "people": {
+        "americanPeople": "George Bush",
+        "russianPeople": {
+          "name": "Danila"
+        }
+      }
+     }
     }
   }
 }

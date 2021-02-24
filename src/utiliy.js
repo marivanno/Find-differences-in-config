@@ -22,7 +22,6 @@ const buildTree = (array, depth = 0) => {
   return `${result} \n${spaceGen(depth)}}`;
 };
 
-
 export const generateToString = (depth, key, value, char) => {
   if (_.isObjectLike(value)) {
     return `${spaceGen(depth)}${char} ${key}: ${buildTree(buildArray(value), 2)}`;

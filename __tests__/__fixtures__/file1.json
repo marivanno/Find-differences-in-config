@@ -9,8 +9,13 @@
   "people": {
     "americanPeople": "George Bush",
     "russianPeople": {
-      "name": "Danila",
-      "surname": "Pedrila"
+      "name": { "people": {
+        "americanPeople": "George Bush",
+        "russianPeople": {
+          "name": "Vampir Peter"
+        }
+      }
+     }
     }
   }
 }
