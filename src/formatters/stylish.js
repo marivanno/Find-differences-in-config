@@ -31,8 +31,7 @@ const renderTree = (data, depth = 0) => {
     }
     if (type === 'nested') {
       return `${acc} \n${spaceGen(depth)}  ${key}: ${renderTree(value, depth + 1)}`;
-    }
-    return acc;
+    } throw new Error(`Unexpected type ${type}`);
   }, '{');
   return `${result} \n${spaceGen(depth)}}`;
 };
