@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { spaceGen, ObjectToString } from '../utiliy.js';
 
-const buildTree = (data, depth = 0) => {
+const renderTree = (data, depth = 0) => {
   const result = data.reduce((acc, {
     key, value, type, valueAfter, valueBefore,
   }) => {
@@ -30,11 +30,11 @@ const buildTree = (data, depth = 0) => {
       return `${acc} \n${spaceGen(depth)}- ${key}: ${valueBefore}\n${spaceGen(depth)}+ ${key}: ${valueAfter}`;
     }
     if (type === 'nested') {
-      return `${acc} \n${spaceGen(depth)}  ${key}: ${buildTree(value, depth + 1)}`;
+      return `${acc} \n${spaceGen(depth)}  ${key}: ${renderTree(value, depth + 1)}`;
     }
     return acc;
   }, '{');
   return `${result} \n${spaceGen(depth)}}`;
 };
 
-export default buildTree;
+export default renderTree;

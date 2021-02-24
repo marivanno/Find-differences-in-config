@@ -1,4 +1,5 @@
-import buildTree from '../src/bin/buildTree.js';
+import buildTree from '../src/buildAst.js';
+import renderPlain from '../src/formatters/plain.js'
 // import treeStile from '../src/stylish.js';
 const object1 = {
   animal: 'bober',
@@ -33,7 +34,7 @@ const object2 = {
 };
 
 const resultAST = [
-  { key: 'animal', value: 'bober', type: 'unchenged' },
+  { key: 'animal', value: 'bober', type: 'unchanged' },
   {
     key: 'famaly',
     type: 'nested',
@@ -43,7 +44,7 @@ const resultAST = [
       valueAfter: 'Marina shadrina',
       type: 'modifed',
     },
-    { key: 'male', value: 'Ivan shadrin', type: 'unchenged' },
+    { key: 'male', value: 'Ivan shadrin', type: 'unchanged' },
     ],
   },
   {
@@ -57,12 +58,12 @@ const resultAST = [
     key: 'people',
     type: 'nested',
     value: [
-      { key: 'americanPeople', value: 'George Bush', type: 'unchenged' },
+      { key: 'americanPeople', value: 'George Bush', type: 'unchanged' },
       {
         key: 'russianPeople',
         type: 'nested',
         value: [
-          { key: 'name', value: 'Danila', type: 'unchenged' },
+          { key: 'name', value: 'Danila', type: 'unchanged' },
           { key: 'surname', value: 'Pedrila', type: 'deleted' },
         ],
       },
@@ -70,23 +71,18 @@ const resultAST = [
   },
 ];
 
-test('gendiff', () => {
+const resultRenderPlan = `
+Property 'famaly.female' was updated. From Marina chekmareva to Marina shadrina.
+Property 'number' was updated. From 1989 to 2000.
+Property 'number2' was removed.
+Property 'people.russianPeople.surname' was removed.`;
+
+test('buildingAstTree', () => {
   expect(buildTree(object1, object2))
     .toEqual(resultAST);
 });
 
-// test('stylish', () => {
-//   expect(treeStile([
-//     { key: 'animal', value: 'bober', type: 'unchenged' },
-//     { key: 'key', type: 'object', value: [[Object], [Object]] },
-//     {
-//       key: 'key4', valueAfter: '123', valueBefore: 123, type: 'modifed',
-//     },
-//     {
-//       key: 'people',
-//       valueBefore: { marina: 'shadrina', ivan: 'shadrin' },
-//       type: 'deleted',
-//     },
-//   ]))
-//     .toEqual('{\n  avg: 0.278\n  hr: petia\n- rbi: 22\n+ rbi: 147\n}');
-// });
+test('renderPlain', () => {
+  expect(renderPlain(resultAST)).toEqual(resultRenderPlan);
+});
+
