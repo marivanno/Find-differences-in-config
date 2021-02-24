@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const buildTree = (jsonObjBefore, jsonObjAfter) => {
+const buildAst = (jsonObjBefore, jsonObjAfter) => {
   const allKeyInArray = _.union(_.keys(jsonObjBefore), _.keys(jsonObjAfter)).sort();
   const resultObject = [];
   allKeyInArray.forEach((key) => {
@@ -35,18 +35,18 @@ const buildTree = (jsonObjBefore, jsonObjAfter) => {
     } else if (_.isObjectLike(jsonObjBefore[key]) && _.isObjectLike(jsonObjAfter[key])) {
       resultObject.push({
         key,
+        value: buildAst(jsonObjBefore[key], jsonObjAfter[key]),
         type: 'nested',
-        value: buildTree(jsonObjBefore[key], jsonObjAfter[key]),
       });
     } else {
       resultObject.push({
         key,
         value: jsonObjAfter[key],
-        type: 'unchenged',
+        type: 'unchanged',
       });
     }
   });
   return resultObject;
 };
 
-export default buildTree;
+export default buildAst;
