@@ -16,11 +16,11 @@ test.each([
   ['file5.json', 'file6.json', 'plain'],
   ['file5.json', 'file6.json', 'stylish'],
 ])('gendiff', (before, after, format) => {
-  const file1 = path.resolve(__dirname, `__tests__/__fixtures__/${before}`);
-  const file2 = path.resolve(__dirname, `__tests__/__fixtures__/${after}`);
+  const file1 = path.resolve(__dirname,'..', `__tests__/__fixtures__/${before}`);
+  const file2 = path.resolve(__dirname,'..', `__tests__/__fixtures__/${after}`);
   const ast = buildAst(file1, file2);
   fs.writeFileSync(`c:/dev/${format}_${before}_${after}_result`, formatter(ast, format), 'utf8');
-  const result = fs.readFileSync(path.resolve(__dirname, `__tests__/__fixtures__/${format}_${before}_${after}_result`), 'utf8');
+  const result = fs.readFileSync(path.resolve(__dirname,'..', `__tests__/__fixtures__/${format}_${before}_${after}_result`), 'utf8');
   expect(formatter(ast, format)).toBe(result);
 });
 
