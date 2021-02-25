@@ -28,3 +28,10 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    - name: Test & publish code coverage
+      uses: paambaati/codeclimate-action@v2.6.0
+      env:
+        CC_TEST_REPORTER_ID: ${19ad36d4e6e2a59d14918f666f79ece829c5a37cd48f6efcd78fd9e827d1648f}
+      with:
+        coverageCommand: make test-coverage
+        debug: true
