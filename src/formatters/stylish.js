@@ -12,7 +12,7 @@ const renderTree = (data, depth = 0) => {
     }
     if (type === 'nested') {
       return `${acc} \n${generateToString(depth, key, renderTree(value, depth + 1), ' ')}`;
-    } return type === 'added' 
+    } return type === 'added'
       ? `${acc} \n${generateToString(depth, key, value, '+')}` : `${acc} \n${generateToString(depth, key, value, '-')}`;
   }, '{');
   return `${result} \n${spaceGen(depth)}}`;
