@@ -1,0 +1,25 @@
+{ 
+  animal: bober 
+  famaly: { 
+    - female: Marina chekmareva
+    + female: Marina shadrina 
+      male: Ivan shadrin 
+    } 
+- number: 1989
++ number: 2000 
+- number2: 1990 
+  people: { 
+      americanPeople: George Bush 
+      russianPeople: { 
+          name: { 
+              people: { 
+                  americanPeople: George Bush 
+                  russianPeople: { 
+                    - name: Vampir Peter
+                    + name: Danila 
+                    } 
+                } 
+            } 
+        } 
+    } 
+}

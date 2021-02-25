@@ -6,7 +6,7 @@ import formatter from '../formatters/index.js';
 
 const program = new commander.Command();
 
-program
+export default program
   .version('0.0.1')
   .description('Compares two configuration files and shows a difference.')
   .option('-f, --format [type]', 'output format', 'stylish')
@@ -18,3 +18,4 @@ program
     console.log(stringDiff);
   })
   .parse(process.argv);
+

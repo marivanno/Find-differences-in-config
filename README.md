@@ -17,7 +17,7 @@ Supported format:
 Output formats:
 
 * plain
-* tree
+* stylish
 * json
 
 
