@@ -33,5 +33,5 @@ jobs:
       env:
         CC_TEST_REPORTER_ID: ${19ad36d4e6e2a59d14918f666f79ece829c5a37cd48f6efcd78fd9e827d1648f}
       with:
-        coverageCommand: make test-coverage
+        coverageCommand: npm test -- --coverage --coverageProvider=v8
         debug: true
