@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import commander from 'commander';
-import buildAst from '../index.js';
-import formatter from '../formatters/index.js';
+import buildAst from '../src/index.js';
+import formatter from '../src/formatters/index.js';
 
 const program = new commander.Command();
 
