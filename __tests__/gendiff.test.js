@@ -1,7 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import formatter from '../src/formatters/index.js';
-import buildAst from '../src/index.js';
+import gendiff from '../index.js'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -18,8 +17,7 @@ test.each([
 ])('gendiff', (before, after, format) => {
   const file1 = path.resolve(__dirname, '..', `__tests__/__fixtures__/${before}`);
   const file2 = path.resolve(__dirname, '..', `__tests__/__fixtures__/${after}`);
-  const ast = buildAst(file1, file2);
   const result = fs.readFileSync(path.resolve(__dirname, '..', `__tests__/__fixtures__/${format}_${before}_${after}_result`), 'utf8');
-  expect(formatter(ast, format)).toBe(result);
+  expect(gendiff(file1, file2, format)).toBe(result);
 });
 

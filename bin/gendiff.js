@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-
 import commander from 'commander';
-import gendiff from '../index.js'
+import gendiff from '../index.js';
 
 const program = new commander.Command();
 
@@ -15,4 +14,3 @@ export default program
     console.log(gendiff(path1, path2, program.format));
   })
   .parse(process.argv);
-
