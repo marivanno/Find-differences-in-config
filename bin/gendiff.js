@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 import commander from 'commander';
-import buildAst from '../src/index.js';
-import formatter from '../src/formatters/index.js';
+import gendiff from '../index.js'
 
 const program = new commander.Command();
 
@@ -13,9 +12,7 @@ export default program
   .arguments('<filepath1>', 'path to file 1')
   .arguments('<filepath2>', 'path to file 2')
   .action((path1, path2) => {
-    const ast = buildAst(path1, path2);
-    const stringDiff = formatter(ast, program.format);
-    console.log(stringDiff);
+    console.log(gendiff(path1, path2, program.format));
   })
   .parse(process.argv);
 

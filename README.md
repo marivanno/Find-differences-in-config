@@ -34,3 +34,18 @@ Options:
 -f, --format [type]  Output format
 -h, --help           output usage information
 ```
+##Exaples
+Difference in two files ("flat files" .json)
+[![asciicast](https://asciinema.org/a/Upr20yCUUCpgt38YEEgzBfebv.svg)](https://asciinema.org/a/Upr20yCUUCpgt38YEEgzBfebv)
+
+Difference in two files ("flat files" .yml)
+[![asciicast](https://asciinema.org/a/meOgBPZXF57Af9VMZT50zxHsn.svg)](https://asciinema.org/a/meOgBPZXF57Af9VMZT50zxHsn)
+
+Difference in two files ("tree files" .json)
+[![asciicast](https://asciinema.org/a/Gt4vK0rqYDli5QVZ2I6wSvZMx.svg)](https://asciinema.org/a/Gt4vK0rqYDli5QVZ2I6wSvZMx)
+
+Difference in two files ("tree files" .json type: plain)
+[![asciicast](https://asciinema.org/a/ls2lmqkYezjpoYgBHIe1Tb4Lu.svg)](https://asciinema.org/a/ls2lmqkYezjpoYgBHIe1Tb4Lu)
+
+Difference in two files ("tree files" .json type: "json")
+[![asciicast](https://asciinema.org/a/oV0pHV9GasMYVHHQe6l8p8XZy.svg)](https://asciinema.org/a/oV0pHV9GasMYVHHQe6l8p8XZy)
