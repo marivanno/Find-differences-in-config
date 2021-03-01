@@ -1,6 +1,6 @@
-{ 
-  avg: 0.278 
-  hr: petia 
-- rbi: 147
-+ rbi: 22 
+{
+    avg: 0.278
+    hr: petia
+  - rbi: 147
+  + rbi: 22
 }
