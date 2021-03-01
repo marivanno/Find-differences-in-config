@@ -22,6 +22,7 @@ const buildAst = (jsonObjBefore, jsonObjAfter) => {
       resultObject.push({ key, value: jsonObjAfter[key], type: 'unchanged' });
     }
   });
+  console.log(resultObject);
   return resultObject;
 };
 

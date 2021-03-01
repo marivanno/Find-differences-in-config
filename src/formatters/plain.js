@@ -3,26 +3,28 @@ import _ from 'lodash';
 const getValue = (value) => (_.isObjectLike(value) ? '[complex value]' : value);
 
 const renderPlain = (ast, keyAcc = '') => ast.filter(({ type }) => type !== 'unchanged')
-  .reduce((acc, {
+  .map(({
     key, type, valueBefore, valueAfter, value,
   }) => {
     const newAcc = !keyAcc ? `${key}` : `${keyAcc}.${key}`;
     switch (type) {
       case 'nested': {
-        return `${acc}${renderPlain(value, newAcc)}`;
+        return renderPlain(value, newAcc);
       }
       case 'added': {
-        return `${acc}\nProperty '${newAcc}' was added with value: ${getValue(value)}.`;
+        return `Property '${newAcc}' was added with value: ${getValue(value)}.`;
       }
       case 'deleted': {
-        return `${acc}\nProperty '${newAcc}' was removed.`;
+        return `Property '${newAcc}' was removed.`;
       }
       case 'modifed': {
-        return `${acc}\nProperty '${newAcc}' was updated. From ${getValue(valueBefore)} to ${getValue(valueAfter)}.`;
+        return `Property '${newAcc}' was updated. From ${getValue(valueBefore)} to ${getValue(valueAfter)}.`;
       }
       default:
         throw new Error(`Unexpected type ${type}`);
     }
-  }, '');
+  })
+  .flat()
+  .join('\n');
 
 export default renderPlain;

@@ -11,7 +11,7 @@ const renderTree = (data, depth = 0) => {
       return `${acc} \n${generateToString(depth, key, valueBefore, '-')}\n${generateToString(depth, key, valueAfter, '+')}`;
     }
     if (type === 'nested') {
-      return `${acc} \n${generateToString(depth, key, renderTree(value, depth + 1), ' ')}`;
+      return `${acc} \n${generateToString(depth, key, renderTree(value, depth + 2), ' ')}`;
     } return type === 'added'
       ? `${acc} \n${generateToString(depth, key, value, '+')}` : `${acc} \n${generateToString(depth, key, value, '-')}`;
   }, '{');
