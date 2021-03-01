@@ -17,9 +17,7 @@ const buildAst = (jsonObjBefore, jsonObjAfter) => {
       };
     } else if (_.isObjectLike(jsonObjBefore[key]) && _.isObjectLike(jsonObjAfter[key])) {
       return { key, value: buildAst(jsonObjBefore[key], jsonObjAfter[key]), type: 'nested' };
-    } else {
-      return { key, value: jsonObjAfter[key], type: 'unchanged' };
-    }
+    } return { key, value: jsonObjAfter[key], type: 'unchanged' };
   });
   return result;
 };
