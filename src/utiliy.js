@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export const spaceGen = (num) => '  '.repeat(num);
+export const spaceGen = (num) => ' '.repeat(num);
 
 const buildArray = (object) => {
   const ownArray = Object.entries(object);
@@ -24,6 +24,6 @@ const buildTree = (array, depth) => {
 
 export const generateToString = (depth, key, value, char) => {
   if (_.isObjectLike(value)) {
-    return `${spaceGen(depth)}${char} ${key}: ${buildTree(buildArray(value), 2)}`;
+    return `${spaceGen(depth)}${char} ${key}: ${buildTree(buildArray(value), 6)}`;
   } return `${spaceGen(depth)}${char} ${key}: ${value}`;
 };

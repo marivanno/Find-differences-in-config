@@ -1,21 +1,57 @@
-import { spaceGen, generateToString } from '../utiliy.js';
+import _ from 'lodash';
 
-const renderTree = (data, depth = 0) => {
-  const result = data.reduce((acc, {
-    key, value, type, valueAfter, valueBefore,
-  }) => {
-    if (type === 'unchanged') {
-      return `${acc} \n${generateToString(depth, key, value, ' ')}`;
-    }
-    if (type === 'modifed') {
-      return `${acc} \n${generateToString(depth, key, valueBefore, '-')}\n${generateToString(depth, key, valueAfter, '+')}`;
-    }
-    if (type === 'nested') {
-      return `${acc} \n${generateToString(depth, key, renderTree(value, depth + 2), ' ')}`;
-    } return type === 'added'
-      ? `${acc} \n${generateToString(depth, key, value, '+')}` : `${acc} \n${generateToString(depth, key, value, '-')}`;
-  }, '{');
-  return `${result} \n${spaceGen(depth)}}`;
+const indentShiftSize = 4;
+
+const formatValue = (val, globalIndentSize) => {
+  if (!_.isPlainObject(val)) {
+    return val;
+  }
+
+  const localIndentSize = globalIndentSize + indentShiftSize;
+
+  const lines = _.entries(val)
+    .map(([key, value]) => {
+      const formattedValue = formatValue(value, localIndentSize);
+      return `${' '.repeat(localIndentSize)}${key}: ${formattedValue}`;
+    })
+    .join('\n');
+
+  const globalIndent = ' '.repeat(globalIndentSize);
+
+  return `{\n${lines}\n${globalIndent}}`;
 };
+
+const formatListToStylish = (list, globalIndentSize) => {
+  const localIndentSize = globalIndentSize + indentShiftSize;
+
+  const lines = list
+    .map(({
+      key, type, valueBefore, valueAfter, value,
+    }) => {
+      switch (type) {
+        case 'deleted':
+          return `${'- '.padStart(localIndentSize)}${key}: ${formatValue(value, localIndentSize)}`;
+        case 'added':
+          return `${'+ '.padStart(localIndentSize)}${key}: ${formatValue(value, localIndentSize)}`;
+        case 'modifed': {
+          const oldEntry = `${'- '.padStart(localIndentSize)}${key}: ${formatValue(valueBefore, localIndentSize)}`;
+          const newEntry = `${'+ '.padStart(localIndentSize)}${key}: ${formatValue(valueAfter, localIndentSize)}`;
+          return `${oldEntry}\n${newEntry}`;
+        }
+        case 'unchanged':
+          return `${' '.repeat(localIndentSize)}${key}: ${formatValue(value, localIndentSize)}`;
+        case 'nested':
+          return `${' '.repeat(localIndentSize)}${key}: ${formatListToStylish(value, localIndentSize)}`;
+        default:
+          throw new Error(`Unknown type '${type}'`);
+      }
+    });
+
+  const globalIndent = ' '.repeat(globalIndentSize);
+
+  return `{\n${lines.join('\n')}\n${globalIndent}}`;
+};
+
+const renderTree = (diff) => formatListToStylish(diff, 0);
 
 export default renderTree;
