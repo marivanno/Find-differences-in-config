@@ -1,28 +1,27 @@
 import _ from 'lodash';
 
 const buildAst = (jsonObjBefore, jsonObjAfter) => {
-  const allKeyInArray = _.union(_.keys(jsonObjBefore), _.keys(jsonObjAfter)).sort();
-  const resultObject = [];
-  allKeyInArray.forEach((key) => {
+  const allKeyInArray = _.sortBy(_.union(_.keys(jsonObjBefore), _.keys(jsonObjAfter)));
+  const result = allKeyInArray.map((key) => {
     if (!_.has(jsonObjBefore, key)) {
-      resultObject.push({ key, value: jsonObjAfter[key], type: 'added' });
+      return { key, value: jsonObjAfter[key], type: 'added' };
     } else if (!_.has(jsonObjAfter, key)) {
-      resultObject.push({ key, value: jsonObjBefore[key], type: 'deleted' });
+      return { key, value: jsonObjBefore[key], type: 'deleted' };
     } else if (jsonObjBefore[key] !== jsonObjAfter[key] && !_.isObjectLike(jsonObjBefore[key])) {
-      resultObject.push({
+      return {
         key, valueBefore: jsonObjBefore[key], valueAfter: jsonObjAfter[key], type: 'modifed',
-      });
+      };
     } else if (jsonObjBefore[key] !== jsonObjAfter[key] && !_.isObjectLike(jsonObjAfter[key])) {
-      resultObject.push({
+      return {
         key, valueBefore: jsonObjBefore[key], valueAfter: jsonObjAfter[key], type: 'modifed',
-      });
+      };
     } else if (_.isObjectLike(jsonObjBefore[key]) && _.isObjectLike(jsonObjAfter[key])) {
-      resultObject.push({ key, value: buildAst(jsonObjBefore[key], jsonObjAfter[key]), type: 'nested' });
+      return { key, value: buildAst(jsonObjBefore[key], jsonObjAfter[key]), type: 'nested' };
     } else {
-      resultObject.push({ key, value: jsonObjAfter[key], type: 'unchanged' });
+      return { key, value: jsonObjAfter[key], type: 'unchanged' };
     }
   });
-  return resultObject;
+  return result;
 };
 
 export default buildAst;

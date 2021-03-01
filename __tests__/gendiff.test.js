@@ -1,9 +1,8 @@
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
-import gendiff from '../index.js';
 import fs from 'fs';
-
+import gendiff from '../index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -21,4 +20,3 @@ test.each([
   const result = fs.readFileSync(path.resolve(__dirname, '..', `__tests__/__fixtures__/${format}_${before}_${after}_result`), 'utf8');
   expect(gendiff(file1, file2, format)).toBe(result);
 });
-
