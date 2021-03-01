@@ -1,6 +1,10 @@
 import _ from 'lodash';
 
-const getValue = (value) => (_.isObjectLike(value) ? `[complex value]` : value);
+const getValue = (value) => {
+  if (_.isObjectLike(value)) {
+    return `[complex value] : value`
+  } return _.isString(value) ? `'${value}'` : value;
+};
 
 const renderPlain = (ast, keyAcc = '') => ast.filter(({ type }) => type !== 'unchanged')
   .map(({
@@ -18,7 +22,7 @@ const renderPlain = (ast, keyAcc = '') => ast.filter(({ type }) => type !== 'unc
         return `Property '${newAcc}' was removed`;
       }
       case 'modifed': {
-        return `Property '${newAcc}' was updated. From ${getValue(valueBefore)} to '${getValue(valueAfter)}'`;
+        return `Property '${newAcc}' was updated. From ${getValue(valueBefore)} to ${getValue(valueAfter)}`;
       }
       default:
         throw new Error(`Unexpected type ${type}`);
