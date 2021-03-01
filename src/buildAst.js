@@ -5,17 +5,21 @@ const buildAst = (jsonObjBefore, jsonObjAfter) => {
   const result = allKeyInArray.map((key) => {
     if (!_.has(jsonObjBefore, key)) {
       return { key, value: jsonObjAfter[key], type: 'added' };
-    } else if (!_.has(jsonObjAfter, key)) {
+    }
+    if (!_.has(jsonObjAfter, key)) {
       return { key, value: jsonObjBefore[key], type: 'deleted' };
-    } else if (jsonObjBefore[key] !== jsonObjAfter[key] && !_.isObjectLike(jsonObjBefore[key])) {
+    }
+    if (jsonObjBefore[key] !== jsonObjAfter[key] && !_.isObjectLike(jsonObjBefore[key])) {
       return {
         key, valueBefore: jsonObjBefore[key], valueAfter: jsonObjAfter[key], type: 'modifed',
       };
-    } else if (jsonObjBefore[key] !== jsonObjAfter[key] && !_.isObjectLike(jsonObjAfter[key])) {
+    }
+    if (jsonObjBefore[key] !== jsonObjAfter[key] && !_.isObjectLike(jsonObjAfter[key])) {
       return {
         key, valueBefore: jsonObjBefore[key], valueAfter: jsonObjAfter[key], type: 'modifed',
       };
-    } else if (_.isObjectLike(jsonObjBefore[key]) && _.isObjectLike(jsonObjAfter[key])) {
+    }
+    if (_.isObjectLike(jsonObjBefore[key]) && _.isObjectLike(jsonObjAfter[key])) {
       return { key, value: buildAst(jsonObjBefore[key], jsonObjAfter[key]), type: 'nested' };
     } return { key, value: jsonObjAfter[key], type: 'unchanged' };
   });
