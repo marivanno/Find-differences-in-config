@@ -1,29 +1,22 @@
 import _ from 'lodash';
 
-const buildAst = (jsonObjBefore, jsonObjAfter) => {
-  const allKeyInArray = _.sortBy(_.union(_.keys(jsonObjBefore), _.keys(jsonObjAfter)));
-  const result = allKeyInArray.map((key) => {
-    if (!_.has(jsonObjBefore, key)) {
-      return { key, value: jsonObjAfter[key], type: 'added' };
+const buildAst = (objBefore, objAfter) => _.sortBy(_.union(_.keys(objBefore), _.keys(objAfter)))
+  .map((key) => {
+    if (!_.has(objBefore, key)) {
+      return { key, value: objAfter[key], type: 'added' };
     }
-    if (!_.has(jsonObjAfter, key)) {
-      return { key, value: jsonObjBefore[key], type: 'deleted' };
+    if (!_.has(objAfter, key)) {
+      return { key, value: objBefore[key], type: 'deleted' };
     }
-    if (jsonObjBefore[key] !== jsonObjAfter[key] && !_.isObjectLike(jsonObjBefore[key])) {
+    if (objBefore[key] !== objAfter[key] && (!_.isObjectLike(objBefore[key])
+    || !_.isObjectLike(objAfter[key]))) {
       return {
-        key, valueBefore: jsonObjBefore[key], valueAfter: jsonObjAfter[key], type: 'modifed',
+        key, valueBefore: objBefore[key], valueAfter: objAfter[key], type: 'modifed',
       };
     }
-    if (jsonObjBefore[key] !== jsonObjAfter[key] && !_.isObjectLike(jsonObjAfter[key])) {
-      return {
-        key, valueBefore: jsonObjBefore[key], valueAfter: jsonObjAfter[key], type: 'modifed',
-      };
-    }
-    if (_.isObjectLike(jsonObjBefore[key]) && _.isObjectLike(jsonObjAfter[key])) {
-      return { key, value: buildAst(jsonObjBefore[key], jsonObjAfter[key]), type: 'nested' };
-    } return { key, value: jsonObjAfter[key], type: 'unchanged' };
+    if (_.isObjectLike(objBefore[key]) && _.isObjectLike(objAfter[key])) {
+      return { key, value: buildAst(objBefore[key], objAfter[key]), type: 'nested' };
+    } return { key, value: objAfter[key], type: 'unchanged' };
   });
-  return result;
-};
 
 export default buildAst;
