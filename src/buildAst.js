@@ -14,9 +14,9 @@ const buildAst = (objBefore, objAfter) => _.sortBy(_.union(_.keys(objBefore), _.
         key, valueBefore: objBefore[key], valueAfter: objAfter[key], type: 'modifed',
       };
     }
-    if (_.isObjectLike(objBefore[key]) && _.isObjectLike(objAfter[key])) {
-      return { key, value: buildAst(objBefore[key], objAfter[key]), type: 'nested' };
-    } return { key, value: objAfter[key], type: 'unchanged' };
+    return _.isObjectLike(objBefore[key]) && _.isObjectLike(objAfter[key])
+      ? { key, value: buildAst(objBefore[key], objAfter[key]), type: 'nested' }
+      : { key, value: objAfter[key], type: 'unchanged' };
   });
 
 export default buildAst;
